@@ -3,27 +3,25 @@
 
   <body></body>
 
-  <script>
-    // test promise polyfills
-    window.Promise = null;
-  </script>
-
-  <!-- <script src="promise-0.1.1.js"></script> -->
-
   <script src="test.js"></script>
-
 
   <!-- set this to the path to traceur.js -->
   <script src="../../traceur-compiler/bin/traceur.js"></script>
 
-  <!-- run Grunt first to create this file -->
-  <script src="../tmp/es6-module-loader.js"></script>
+  <!-- <script>
+    // remove HTML comments to test promise polyfill
+    window.Promise = null;
+  </script>
+  <script src="../lib/promise.js"></script> -->
+
+  <script src="../lib/loader.js"></script>
+  <script src="../lib/system.js"></script>
 
   <script>
     runTests();
   </script>
 
-  <script type="module" name="named-module">
+  <!-- <script type="module" name="named-module">
     class q {
       constructor() {
         this.p = 'hi';
@@ -39,11 +37,12 @@
       }
     }
   </script>
-
+  -->
   <!-- 
   Not yet supported
   <script type="module" src="loader/anon.js"></script> 
   -->
+  <!--
   <script type="module" name="named" src="loader/named.js"></script>
 
   <script>
@@ -68,4 +67,5 @@
       });
     }, 500);
   </script>
+  -->
 
