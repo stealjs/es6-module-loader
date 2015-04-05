@@ -1125,8 +1125,6 @@ function logloads(loads) {
   function getTranspilerModule(loader, globalName) {
     return loader.newModule({ 'default': g[globalName], __useDefault: true });
   }
-  // NB this does not support sub-classing well
-  var firstRun = true;
 
   // use Traceur by default
   Loader.prototype.transpiler = 'traceur';
@@ -1135,12 +1133,12 @@ function logloads(loads) {
     var self = this;
 
     // pick up Transpiler modules from existing globals on first run if set
-    if (firstRun) {
+    if (!self.transpilerHasRun) {
       if (g.traceur && !self.has('traceur'))
         self.set('traceur', getTranspilerModule(self, 'traceur'));
       if (g.babel && !self.has('babel'))
         self.set('babel', getTranspilerModule(self, 'babel'));
-      firstRun = false;
+      self.transpilerHasRun = true;
     }
     
     return self['import'](self.transpiler).then(function(transpiler) {
@@ -1219,7 +1217,8 @@ function logloads(loads) {
   }
 
 
-})(__global.LoaderPolyfill);/*
+})(__global.LoaderPolyfill);
+/*
 *********************************************************************************************
 
   System Loader Implementation
