@@ -271,12 +271,18 @@ function logloads(loads) {
 
       // 15.2.4.5.2 CallInstantiate
       .then(function(source) {
+        if(load.status != 'loading') {
+          return;
+        }
         load.source = source;
         return loader.loaderObj.instantiate({ name: load.name, metadata: load.metadata, address: load.address, source: source });
       })
 
       // 15.2.4.5.3 InstantiateSucceeded
       .then(function(instantiateResult) {
+        if(load.status != 'loading') {
+          return;
+        }
         if (instantiateResult === undefined) {
           load.address = load.address || '<Anonymous Module ' + ++anonCnt + '>';
 
@@ -311,6 +317,9 @@ function logloads(loads) {
       })
       // 15.2.4.6 ProcessLoadDependencies
       .then(function() {
+        if(load.status != 'loading') {
+          return;
+        }
         load.dependencies = [];
         var depsList = load.depsList;
 
@@ -348,6 +357,9 @@ function logloads(loads) {
       .then(function() {
         // console.log('LoadSucceeded ' + load.name);
         // snapshot(loader);
+        if(load.status != 'loading') {
+          return;
+        }
 
         console.assert(load.status == 'loading', 'is loading');
 
