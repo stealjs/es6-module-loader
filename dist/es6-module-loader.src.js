@@ -2337,7 +2337,7 @@ function logloads(loads) {
       var m = new Module();
 
       var pNames;
-      if (Object.getOwnPropertyNames) {
+      if (Object.getOwnPropertyNames && obj != null) {
         pNames = Object.getOwnPropertyNames(obj);
       }
       else {
