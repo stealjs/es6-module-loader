@@ -2489,6 +2489,7 @@ function logloads(loads) {
   }
 
   function babelTranspile(load, babel) {
+    babel = babel.Babel || babel;
     var options = this.babelOptions || {};
     options.sourceMap = 'inline';
     options.filename = load.address;
