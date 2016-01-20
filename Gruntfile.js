@@ -20,15 +20,15 @@ module.exports = function (grunt) {
     concat: {
       dist: {
         files: {
-          'dist/<%= pkg.name %>.src.js': [
+          'dist/es6-module-loader.src.js': [
             'node_modules/when/es6-shim/Promise.js',
             'src/polyfill-wrapper-start.js',
-            'dist/<%= pkg.name %>.js',
+            'dist/es6-module-loader.js',
             'src/polyfill-wrapper-end.js'
           ],
-          'dist/<%= pkg.name %>-sans-promises.src.js': [
+          'dist/es6-module-loader-sans-promises.src.js': [
             'src/polyfill-wrapper-start.js',
-            'dist/<%= pkg.name %>.js',
+            'dist/es6-module-loader.js',
             'src/polyfill-wrapper-end.js'
           ]
         }
@@ -41,13 +41,13 @@ module.exports = function (grunt) {
           'src/transpiler.js',
           'src/system.js'
         ],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/es6-module-loader.js'
       }
     },
     'string-replace': {
       dist: {
         files: {
-          'dist/<%= pkg.name %>.js': 'dist/<%= pkg.name %>.js'
+          'dist/es6-module-loader.js': 'dist/es6-module-loader.js'
         },
         options: {
           replacements:[{
@@ -74,12 +74,12 @@ module.exports = function (grunt) {
         options: {
           banner: '<%= meta.banner %>\n'
         },
-        src: 'dist/<%= pkg.name %>.src.js',
-        dest: 'dist/<%= pkg.name %>.js'
+        src: 'dist/es6-module-loader.src.js',
+        dest: 'dist/es6-module-loader.js'
       },
       distSansPromises: {
-        src: 'dist/<%= pkg.name %>-sans-promises.src.js',
-        dest: 'dist/<%= pkg.name %>-sans-promises.js'
+        src: 'dist/es6-module-loader-sans-promises.src.js',
+        dest: 'dist/es6-module-loader-sans-promises.js'
       }
     }
   });
@@ -92,6 +92,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('lint', ['jshint']);
   grunt.registerTask('compile', ['esnext', 'string-replace', 'concat']);
-  grunt.registerTask('default', [/*'jshint', */'esnext', 'string-replace', 
+  grunt.registerTask('default', [/*'jshint', */'esnext', 'string-replace',
                      'concat', 'uglify']);
 };

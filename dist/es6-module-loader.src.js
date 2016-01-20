@@ -2417,7 +2417,7 @@ function logloads(loads) {
   }
 
   // use Traceur by default
-  Loader.prototype.transpiler = 'traceur';
+  Loader.prototype.transpiler = 'babel';
 
   Loader.prototype.transpile = function(load) {
     var self = this;
@@ -2430,7 +2430,7 @@ function logloads(loads) {
         self.set('babel', getTranspilerModule(self, 'babel'));
       self.transpilerHasRun = true;
     }
-    
+
     return self['import'](self.transpiler).then(function(transpiler) {
       if (transpiler.__useDefault)
         transpiler = transpiler['default'];
@@ -2490,14 +2490,29 @@ function logloads(loads) {
 
   function babelTranspile(load, babel) {
     var options = this.babelOptions || {};
-    options.modules = 'system';
     options.sourceMap = 'inline';
     options.filename = load.address;
     options.code = true;
     options.ast = false;
-    
-    if (!options.blacklist)
-      options.blacklist = ['react'];
+
+    var babelVersion = babel.version ? +babel.version.split(".")[0] : 6;
+    if(!babelVersion) babelVersion = 6;
+
+    if(babelVersion >= 6) {
+      // If the user didn't provide presets/plugins, use the defaults
+      if(!options.presets && !options.plugins) {
+        options.presets = [
+          "es2015-no-commonjs", "react", "stage-0"
+        ];
+        options.plugins = [
+          "transform-es2015-modules-systemjs"
+        ];
+      }
+    } else {
+      options.modules = 'system';
+      if (!options.blacklist)
+        options.blacklist = ['react'];
+    }
 
     var source = babel.transform(load.source, options).code;
 
