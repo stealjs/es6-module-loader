@@ -266,7 +266,7 @@ function logloads(loads) {
               // store the deps as load.deps
               load.declare = declare;
               load.depsList = deps;
-            }            
+            }
             __eval(transpiled, __global, load);
             curSystem.register = curRegister;
           });
@@ -731,7 +731,13 @@ function logloads(loads) {
       //    By disaling this module write-protection we gain performance.
       //    It could be useful to allow an option to enable or disable this.
       module.locked = true;
-      moduleObj[name] = value;
+      if(typeof name === 'object') {
+        for(var p in name) {
+          moduleObj[p] = name[p];
+        }
+      } else {
+        moduleObj[name] = value;
+      }
 
       for (var i = 0, l = module.importers.length; i < l; i++) {
         var importerModule = module.importers[i];
