@@ -9,7 +9,7 @@
   }
 
   // use Traceur by default
-  Loader.prototype.transpiler = 'traceur';
+  Loader.prototype.transpiler = 'babel';
 
   Loader.prototype.transpile = function(load) {
     var self = this;
@@ -82,7 +82,6 @@
 
   function babelTranspile(load, babel) {
     var options = this.babelOptions || {};
-    options.modules = 'system';
     options.sourceMap = 'inline';
     options.filename = load.address;
     options.code = true;
@@ -95,10 +94,14 @@
       // If the user didn't provide presets/plugins, use the defaults
       if(!options.presets && !options.plugins) {
         options.presets = [
-          "es2015", "react", "stage-0"
+          "es2015-no-commonjs", "react", "stage-0"
+        ];
+        options.plugins = [
+          "transform-es2015-modules-systemjs"
         ];
       }
     } else {
+      options.modules = 'system';
       if (!options.blacklist)
         options.blacklist = ['react'];
     }
