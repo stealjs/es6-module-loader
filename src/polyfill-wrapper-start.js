@@ -1,6 +1,6 @@
 (function(__global) {
-  
-$__Object$getPrototypeOf = Object.getPrototypeOf || function(obj) {
+
+__global.$__Object$getPrototypeOf = Object.getPrototypeOf || function(obj) {
   return obj.__proto__;
 };
 
@@ -20,7 +20,7 @@ var $__Object$defineProperty;
   }
 }());
 
-$__Object$create = Object.create || function(o, props) {
+__global.$__Object$create = Object.create || function(o, props) {
   function F() {}
   F.prototype = o;
 
