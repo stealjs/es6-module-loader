@@ -198,8 +198,35 @@
           throw new TypeError('Illegal module name "' + name + '"');
       }
 
-      if (!rel)
+      if (!rel) {
         return name;
+      }else{
+        var lastSegment = segments.pop();
+        // Detech if this name contains a plugin part like: app.less!steal/less
+        // and catch the plugin name so that when it is normalized we do not perform
+        // Steal's normalization against it.
+        var pluginIndex = lastSegment.lastIndexOf('!');
+        var pluginPart = "";
+        if (pluginIndex != -1) {
+          // argumentName is the part before the !
+          var argumentName = lastSegment.substr(0, pluginIndex);
+          var pluginName = lastSegment.substr(pluginIndex + 1);
+          pluginPart = "!" + pluginName;
+
+          lastSegment = argumentName;
+        }
+
+        var dot = lastSegment.lastIndexOf(".");
+        if(dot !== -1) {
+          extension = lastSegment.substr(dot+1);
+        }
+
+        if(extension === "js") {
+          segments.push(lastSegment.substr(0, segment.lastIndexOf(".")) + pluginPart);
+        } else {
+          segments.push(lastSegment + pluginPart);
+        }
+      }
 
       // build the full module name
       var normalizedParts = [];
@@ -243,15 +270,9 @@
         }
       }
 
-				var ext = wildcard.match(/\.(\w+)$/);
-				var outPath = this.paths[pathMatch];
-				if (wildcard) {
-					if(!ext || (ext && '*'+ext[0] !== outPath)){
-						outPath = outPath.replace('*', wildcard);
-					}else{
-						outPath = wildcard;
-					}
-				}
+      var outPath = this.paths[pathMatch];
+      if (wildcard)
+        outPath = outPath.replace('*', wildcard);
 
       // percent encode just '#' in module names
       // according to https://github.com/jorendorff/js-loaders/blob/master/browser-loader.js#L238
