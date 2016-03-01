@@ -243,9 +243,15 @@
         }
       }
 
-      var outPath = this.paths[pathMatch];
-      if (wildcard)
-        outPath = outPath.replace('*', wildcard);
+				var ext = wildcard.match(/\.(\w+)$/);
+				var outPath = this.paths[pathMatch];
+				if (wildcard) {
+					if(!ext || (ext && '*'+ext[0] !== outPath)){
+						outPath = outPath.replace('*', wildcard);
+					}else{
+						outPath = wildcard;
+					}
+				}
 
       // percent encode just '#' in module names
       // according to https://github.com/jorendorff/js-loaders/blob/master/browser-loader.js#L238
