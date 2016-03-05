@@ -201,12 +201,14 @@
       if (!rel) {
         return name;
       }else{
-        var lastSegment = segments.pop();
-        // Detech if this name contains a plugin part like: app.less!steal/less
-        // and catch the plugin name so that when it is normalized we do not perform
-        // Steal's normalization against it.
-        var pluginIndex = lastSegment.lastIndexOf('!');
-        var pluginPart = "";
+        var extension,
+            lastSegment = segments.pop(),
+            // Detech if this name contains a plugin part like: app.less!steal/less
+            // and catch the plugin name so that when it is normalized we do not perform
+            // Steal's normalization against it.
+            pluginIndex = lastSegment.lastIndexOf('!'),
+            pluginPart = "";
+
         if (pluginIndex != -1) {
           // argumentName is the part before the !
           var argumentName = lastSegment.substr(0, pluginIndex);
