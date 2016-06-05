@@ -1267,8 +1267,6 @@ function logloads(loads) {
 
     - Implemented to https://github.com/jorendorff/js-loaders/blob/master/browser-loader.js
 
-    - <script type="module"> supported
-
 *********************************************************************************************
 */
 
@@ -1569,11 +1567,10 @@ function logloads(loads) {
   if (typeof exports === 'object')
     module.exports = System;
 
-  __global.System = System;
-
   // <script type="module"> support
   // allow a data-init function callback once loaded
-  if (isBrowser && typeof document.getElementsByTagName != 'undefined') {
+  __global.System = System;
+  /*if (isBrowser && typeof document.getElementsByTagName != 'undefined') {
     var curScript = document.getElementsByTagName('script');
     curScript = curScript[curScript.length - 1];
 
@@ -1609,7 +1606,7 @@ function logloads(loads) {
     // run the data-init function on the script tag
     if (curScript.getAttribute('data-init'))
       window[curScript.getAttribute('data-init')]();
-  }
+  }*/;
 })();
 
 

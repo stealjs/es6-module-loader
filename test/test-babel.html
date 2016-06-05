@@ -29,20 +29,3 @@
   <script>
     runTests();
   </script>
-
-  <script type="module">
-    window.anon = class {
-      constructor() {
-
-      }
-    }
-  </script>
-
-
-  <script>
-    setTimeout(function() {
-      test('Anonymous &lt;script type="module"> tag', function(assert) {
-        assert(typeof window.anon, 'function');
-      });
-    }, 500);
-  </script>
