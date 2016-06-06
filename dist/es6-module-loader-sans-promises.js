@@ -1,5 +1,5 @@
 /*
- *  steal-es6-module-loader v0.17.5
+ *  steal-es6-module-loader v0.17.6
  *  https://github.com/ModuleLoader/es6-module-loader
  *  Copyright (c) 2016 Guy Bedford, Luke Hoban, Addy Osmani; Licensed MIT
  */
