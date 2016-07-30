@@ -92,6 +92,10 @@
     if(!babelVersion) babelVersion = 6;
 
     if(babelVersion >= 6) {
+      // delete the old babel options if they are present in config
+      delete options.optional;
+      delete options.whitelist;
+      delete options.blacklist;
       // If the user didn't provide presets/plugins, use the defaults
       if(!options.presets && !options.plugins) {
         options.presets = [
