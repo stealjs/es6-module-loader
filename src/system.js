@@ -127,6 +127,17 @@
       });
     }
   }
+  else if(typeof fetch === 'function') {
+    fetchTextFromURL = function(url, fulfill, reject) {
+      fetch(url).then(function(resp){
+        return resp.text();
+      }).then(function(text){
+        fulfill(text);
+      }).then(null, function(err){
+        reject(err);
+      });
+    }
+  }
   else {
     throw new TypeError('No environment fetch API available.');
   }
@@ -155,7 +166,7 @@
     get global() {
       return isBrowser ? window : (isWorker ? self : __global);
     }
-   
+
     get strict() { return true; }
 
     normalize(name, parentName, parentAddress) {
@@ -247,7 +258,7 @@
 
       // percent encode just '#' in module names
       // according to https://github.com/jorendorff/js-loaders/blob/master/browser-loader.js#L238
-      // we should encode everything, but it breaks for servers that don't expect it 
+      // we should encode everything, but it breaks for servers that don't expect it
       // like in (https://github.com/systemjs/systemjs/issues/168)
       if (isBrowser)
         outPath = outPath.replace(/#/g, '%23');
