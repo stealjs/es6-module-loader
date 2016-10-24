@@ -64,6 +64,6 @@
     "test:browser:perf": "karma start karma-benchmark.conf.js --single-run"
   },
   "dependencies": {
-    "when": "^3.7.2"
+    "when": "3.7.5"
   }
 }
