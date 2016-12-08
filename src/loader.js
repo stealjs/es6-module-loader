@@ -106,7 +106,7 @@ function logloads(loads) {
   var Promise = __global.Promise || require('when/es6-shim/Promise');
   var console;
   if (__global.console) {
-    console - __global.console;
+    console = __global.console;
     console.assert = console.assert || function() {};
   } else {
     console = { assert: function() {} };
