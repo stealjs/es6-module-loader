@@ -88,7 +88,10 @@
         fulfill(xhr.responseText);
       }
       function error() {
-        reject(xhr.statusText + ': ' + url || 'XHR error');
+        var msg = xhr.statusText + ': ' + url || 'XHR error';
+        var err = new Error(msg);
+        err.statusCode = xhr.status;
+        reject(err);
       }
 
       xhr.onreadystatechange = function () {
