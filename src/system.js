@@ -114,7 +114,7 @@
     }
   }
   else if (typeof require != 'undefined') {
-    var fs;
+    var fs, fourOhFourFS = /ENOENT/;
     fetchTextFromURL = function(url, fulfill, reject) {
       if (url.substr(0, 5) != 'file:')
         throw 'Only file URLs of the form file: allowed running in Node.';
@@ -123,10 +123,17 @@
       if (isWindows)
         url = url.replace(/\//g, '\\');
       return fs.readFile(url, function(err, data) {
-        if (err)
+        if (err) {
+          // Mark this error as a 404, so that the npm extension
+          // will know to retry.
+          if(fourOhFourFS.test(err.message)) {
+            err.statusCode = 404;
+          }
+
           return reject(err);
-        else
+        } else {
           fulfill(data + '');
+        }
       });
     }
   }
