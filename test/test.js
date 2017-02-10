@@ -307,7 +307,7 @@ function runTests() {
       );
     })
   });
-  
+
   test('Load order test: _f', function(assert) {
     System['import']('loads/_f').then(function(m) {
       assert(
@@ -485,6 +485,20 @@ function runTests() {
     function reset() {
       System.locate = oldLocate;
     }
+  });
+
+  test('Can recover from module with bad imports', function(assert){
+    System.define('without-stuff', 'import "./no-file"');
+    System.import('without-stuff')
+    .then(null, function(err){
+      System.define('without-stuff', '');
+      // Should pass now
+      System["delete"]('without-stuff');
+      return System.import('without-stuff');
+    })
+    .then(function(){
+      assert(true, true); // passed!
+    });
   });
 
   var customModules = {};

@@ -1058,6 +1058,11 @@ function logloads(loads) {
           .then(function(load) {
             delete loader.importPromises[name];
             return evaluateLoadedModule(loader, load);
+          }, function(err){
+            if(loaderObj.defined) {
+              loaderObj.defined[name] = undefined;
+            }
+            return Promise.reject(err);
           }));
       });
     },
@@ -1161,7 +1166,6 @@ function logloads(loads) {
   __global.LoaderPolyfill = Loader;
 
 })();
-
 /*
  * Traceur and Babel transpile hook for Loader
  */
