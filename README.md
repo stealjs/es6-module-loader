@@ -1,5 +1,10 @@
 # ES6 Module Loader Polyfill [![Build Status][travis-image]][travis-url]
 
+# DEPRECATED
+
+The loader extension was merged into StealJS core and this repository will no longer be maintained.
+
+--
 _For upgrading to ES6 Module Loader 0.16, [read the release notes here](https://github.com/ModuleLoader/es6-module-loader/releases/tag/v0.16.0)._
 
 Dynamically loads ES6 modules in browsers and [NodeJS](#nodejs-use) with support for loading existing and custom module formats through loader hooks.
