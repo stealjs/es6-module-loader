@@ -217,8 +217,37 @@
           throw new TypeError('Illegal module name "' + name + '"');
       }
 
-      if (!rel)
+      if (!rel) {
         return name;
+      }else{
+        var extension,
+            lastSegment = segments.pop(),
+            // Detech if this name contains a plugin part like: app.less!steal/less
+            // and catch the plugin name so that when it is normalized we do not perform
+            // Steal's normalization against it.
+            pluginIndex = lastSegment.lastIndexOf('!'),
+            pluginPart = "";
+
+        if (pluginIndex != -1) {
+          // argumentName is the part before the !
+          var argumentName = lastSegment.substr(0, pluginIndex);
+          var pluginName = lastSegment.substr(pluginIndex + 1);
+          pluginPart = "!" + pluginName;
+
+          lastSegment = argumentName;
+        }
+
+        var dot = lastSegment.lastIndexOf(".");
+        if(dot !== -1) {
+          extension = lastSegment.substr(dot+1);
+        }
+
+        if(extension === "js") {
+          segments.push(lastSegment.substr(0, segment.lastIndexOf(".")) + pluginPart);
+        } else {
+          segments.push(lastSegment + pluginPart);
+        }
+      }
 
       // build the full module name
       var normalizedParts = [];
